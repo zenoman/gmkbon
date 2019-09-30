@@ -12,11 +12,11 @@
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="breadcomb-wp">
                   <div class="breadcomb-icon">
-                    <i class="fa fa-child"></i>
+                    <i class="fa fa-users"></i>
                   </div>
                   <div class="breadcomb-ctn">
-                    <h2>Admin</h2>
-                    <p>Edit Data Admin</p>
+                    <h2>User</h2>
+                    <p>Edit Data User</p>
                   </div>
                 </div>
               </div>
@@ -37,7 +37,7 @@
 
                     <div class="form-element-list">
                       @foreach($data as $row)
-                      <form action="{{url('admin/'.$row->id)}}" method="post">
+                      <form action="{{url('user/'.$row->id)}}" method="post">
                          @if(session('status'))
                         <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> {{ session('status') }}
@@ -70,11 +70,11 @@
                         @csrf
                         </div>
                         <br>
-                         <div class="row">
+                          <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                               <label>No. Telp</label>
                                     <div class="nk-int-st">
-                                        <input type="text" class="form-control" name="telp" required>
+                                        <input type="text" class="form-control" name="telp" required value="{{$row->notelp}}">
                                     </div>
                                   @if($errors->has('telp'))
                               <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert">
@@ -85,13 +85,13 @@
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                <label>Alamat</label>
                                     <div class="nk-int-st">
-                                        <input type="text" class="form-control" name="alamat" required>
+                                        <input type="text" class="form-control" name="alamat" required value="{{$row->alamat}}">
                                     </div>
                                   @if($errors->has('alamat'))
                               <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> {{ $errors->first('alamat')}}
                             </div>
-                                        @endif
+                             @endif
                             </div>
                         </div>
                         <br>

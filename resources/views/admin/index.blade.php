@@ -68,9 +68,7 @@
                                       @if($row->id==Auth::user()->id)
                                         <a href="{{url('admin/'.$row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-wrench"></i> Edit</a>
                                       @else
-                                      @if(Auth::user()->level=='admin')
-                                      -
-                                      @elseif(Auth::user()->level=='super admin')
+                                     
                                      <form method="post" action="admin/{{$row->id}}">
                                             <input type="hidden" name="_method" value="DELETE">
                                             {{csrf_field()}}
@@ -79,15 +77,6 @@
                                             <button type="submit" onclick="return confirm('Hapus Data ?')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Hapus</button>
                                         </form>
                                         @endif
-                                      @else
-                                      <form method="post" action="admin/{{$row->id}}">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            {{csrf_field()}}
-                                             <a href="{{url('admin/'.$row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-wrench"></i> Edit</a>
-
-                                            <button type="submit" onclick="return confirm('Hapus Data ?')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i> Hapus</button>
-                                        </form>
-                                      @endif
                                         </td>
                                   </tr>
                                   @endforeach

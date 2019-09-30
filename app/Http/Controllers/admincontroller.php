@@ -67,13 +67,12 @@ class admincontroller extends Controller
     public function show($id)
     {
       $dataadmin = DB::table('users')->where('id',$id)->get();
-        return view('admin/edit',['data'=>$dataadmin]);
+        return view('admin.edit',['data'=>$dataadmin]);
     }
 
     //=========================================================================
     public function update(Request $request, $id)
     {
-        $dataadmin = DB::table('users')->where('username',$request->username)->count();
         if($request->password!=''){
             if($request->password==$request->konfirmasi_password){
              DB::table('users')
@@ -86,7 +85,7 @@ class admincontroller extends Controller
             'level'     => $request->level]);
             }else{
             return back()
-            ->with('status','Maaf, username telah di pakai');
+            ->with('status','Maaf, Konfirmasi Password Salah');
             }
            
         }else{
@@ -97,7 +96,7 @@ class admincontroller extends Controller
             'name'      => $request->nama,
             'email'     => $request->email,
             'level'     => $request->level
-        ]);
+            ]);
         }
         return redirect('admin')
         ->with('status','Edit Data Sukses');

@@ -169,7 +169,7 @@
                         
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="#">Tambah Nota</a>
+                                <li><a href="{{route('tambah-nota')}}">Tambah Nota</a>
                                 </li>
                                 <li><a href="#">List Nota</a>
                                 </li>

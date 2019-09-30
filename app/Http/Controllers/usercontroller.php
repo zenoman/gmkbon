@@ -13,28 +13,20 @@ class usercontroller extends Controller
         $this->middleware('auth');
     }
 
+    //=================================================================================
     public function index()
     {
         $data = DB::table('users')->where('level','=','pengguna')->get();
         return view('user.index',['data'=>$data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //=================================================================================
     public function create()
     {
         return view('user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //=================================================================================
     public function store(Request $request)
     {
         $rules = [
@@ -71,46 +63,46 @@ class usercontroller extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=================================================================================
     public function show($id)
     {
-        //
+        $datauser = DB::table('users')->where('id',$id)->get();
+        return view('user.edit',['data'=>$datauser]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //=================================================================================
     public function update(Request $request, $id)
     {
-        //
+        if($request->password!=''){
+            if($request->password==$request->konfirmasi_password){
+             DB::table('users')
+             ->where('id',$id)
+             ->update([
+            'username'  => $request->username,
+            'password'  => Hash::make($request->password),
+            'name'      => $request->nama,
+            'alamat'     => $request->alamat,
+            'notelp'     => $request->telp]);
+            }else{
+            return back()
+            ->with('status','Maaf, Konfirmasi Password Salah');
+            }
+           
+        }else{
+            DB::table('users')
+            ->where('id',$id)
+            ->update([
+            'username'  => $request->username,
+            'name'      => $request->nama,
+            'alamat'     => $request->alamat,
+            'notelp'     => $request->telp
+        ]);
+        }
+        return redirect('user')
+        ->with('status','Edit Data Sukses');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
+    //=================================================================================
     public function destroy($id)
     {
         DB::table('users')->where('id',$id)->delete();
