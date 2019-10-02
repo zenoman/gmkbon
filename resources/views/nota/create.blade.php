@@ -3,88 +3,7 @@
  <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select/bootstrap-select.css')}}">
 @endsection
 @section('content')
-<script language="Javascript" type="text/javascript">
-//fungsi remove html
-//====================================================
-Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-}
-NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-}
-//====================================================
 
-var counter = 1; //variabel nomor inputan
-var limit = 16;
-//fungsi tambah input
-function addInput(divName){
-
- if (counter == limit)  {
-    alert("Limit hanya 15 inputan");
- }
- else {
-    var newdiv = document.createElement('div');
-    newdiv.innerHTML ='<div class="row" id="input'+counter+'">'+
-                          '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">'+
-                              '<label>Nama Barang</label>'+
-                                    '<div class="nk-int-st">'+
-                                        '<input type="text" class="form-control">'+
-                                        '<br>'+
-                                    '</div>'+
-                          '</div>'+
-                          '<div class="row">'+
-                          '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">'+
-                              '<label>Jumlah</label>'+
-                                    '<div class="nk-int-st">'+
-                                        '<input type="text" class="form-control">'+
-                                        '<br>'+
-                                    '</div>'+
-                          '</div>'+
-                          '<div class="row">'+
-                          '<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">'+
-                              '<label>Harga</label>'+
-                                    '<div class="nk-int-st">'+
-                                        '<input type="text" class="form-control">'+
-                                        '<br>'+
-                                    '</div>'+
-                          '</div>'+
-                          '<div class="row">'+
-                          '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">'+
-                              '<label>Total</label>'+
-                                    '<div class="nk-int-st">'+
-                                        '<input type="text" class="form-control">'+
-                                        '<br>'+
-                                    '</div>'+
-                          '</div>'+
-                          '<div class="row">'+
-                          '<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">'+
-                          '<br>'+
-                          '<a href="#" onclick="del('+counter+')"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-remove"></i></button></a>'+
-                          '</div>'+
-                          '</div>'+
-                        '</div>';
-    document.getElementById(divName).appendChild(newdiv);
-    counter++;
- }
-}
-//fungsi hapus input
-function del(no) {
-  document.getElementById('input'+no).remove();
-  counter = counter - 1;
-  for(i=no;i<=limit;i++){
-    var id = document.getElementById('input'+i);
-    if (id === null){
-
-    } else {
-
-    }
-  }
-}
-</script>
 <div class="breadcomb-area">
     <div class="container">
       <div class="row">
@@ -94,7 +13,7 @@ function del(no) {
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="breadcomb-wp">
                   <div class="breadcomb-icon">
-                    <i class="fa fa-child"></i>
+                    <i class="fa fa-list-ul"></i>
                   </div>
                   <div class="breadcomb-ctn">
                     <h2>Nota</h2>
@@ -116,25 +35,25 @@ function del(no) {
                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="form-element-list">
-                      <form action="{{url('admin')}}" method="post">
+                      <form action="{{url('nota')}}" method="post">
                          @if(session('status'))
-                        <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert">
+                        <div class="alert alert-success alert-dismissible alert-mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> {{ session('status') }}
                             </div>
                             @endif
                             <br>
                         <div class="row">
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                              <label>No. Resi</label>
+                              <label>No. Nota</label>
                                   <div class="nk-int-st">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="nota" required>
                                     <br>
                                   </div>
                            </div>
                           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <label>Cari User</label>
                                 <div class="bootstrap-select nk-int-st">
-                                    <select class="selectpicker" data-live-search="true">
+                                    <select class="selectpicker" data-live-search="true" name="usernya">
                                     @foreach($datauser as $data)
                                     <option value="{{$data->id}}">{{$data->name}}</option>
                                     @endforeach
@@ -148,21 +67,30 @@ function del(no) {
                         <br>
                         <div id="dynamicInput"></div>
                         <br>
+                        <hr>
                         <div class="row">
                           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                              <label>Total Jumlah</label>
-                                  <div class="nk-int-st">
-                                    <input type="text" class="form-control">
-                                    <br>
-                                  </div>
-                           </div>
-                          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <label>Total Harga</label>
                                 <div class="nk-int-st">
-                                    <input type="text" class="form-control">
+                                    <input type="text" id="total_harganya" class="form-control" name="total_harga" value="0" readonly>
                                     <br>
                                   </div>
                             </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label>Total Bayar</label>
+                                <div class="nk-int-st">
+                                    <input type="text" id="total_bayar" class="form-control" name="total_bayar" value="0" readonly>
+                                    <input type="hidden" value="0" name="kembalianya" id="kembalianya">
+                                    <input type="hidden" value="belum lunas" name="status" id="status">
+                                    <br>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        		 <label>Kekurangan</label>
+								<h3 id="kembalian"></h3>
+                        	</div>
                         </div>
                           @csrf
                         <div class="row">
@@ -186,4 +114,5 @@ function del(no) {
 @endsection
 @section('js')
 <script src="{{asset('assets/js/bootstrap-select/bootstrap-select.js')}}"></script>
+<script src="{{asset('assets/js/custom/createnota.js')}}"></script>
 @endsection

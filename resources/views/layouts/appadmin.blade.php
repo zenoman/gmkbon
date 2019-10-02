@@ -169,9 +169,15 @@
                         
                         <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="{{route('tambah-nota')}}">Tambah Nota</a>
+                                <li><a href="{{route('tambah-nota')}}"><i class="fa fa-plus"></i> Tambah Nota</a>
                                 </li>
-                                <li><a href="#">List Nota</a>
+                                <li><a href="{{route('tampil-nota')}}">
+                                <i class="fa fa-list-ol"></i> List Semua Nota
+                                </a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-check"></i> List Nota Lunas</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-close"></i> List Semua Belum Lunas</a>
                                 </li>
                             </ul>
                         </div>
