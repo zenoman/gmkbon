@@ -15,8 +15,21 @@ class notacontroller extends Controller
 
     //=========================================================================
     public function create(){
+        $tanggal  = date('dmy');
+        
+        $kode = DB::table('nota')
+        ->where('kode','like','%N'.$tanggal.'%')
+        ->max('kode');
+
+        if(!$kode){
+            $finalkode = "N".$tanggal."-0001";
+        }else{
+            $newkode    = explode("-", $kode);
+            $nomer      = sprintf("%04s",$newkode[1]+1);
+            $finalkode  = "N".$tanggal."-".$nomer;
+        }
     	$datauser = DB::table('users')->where('level','=','pengguna')->get();
-    	return view('nota.create',['datauser'=>$datauser]);
+    	return view('nota.create',['datauser'=>$datauser,'kode'=>$finalkode]);
     }
 
     //========================================================================
@@ -51,7 +64,7 @@ class notacontroller extends Controller
      	'dibayar'=>$request->total_bayar,
      	'kekurangan'=>$request->kembalianya,
         'status'=>$request->status,
-        'pembuat'=>Auth::user()->id
+        'pembuat'=>Auth::user()->username
 		]);
     return redirect('nota/tambahdata')
     ->with('status','Input Data Sukses');
@@ -84,11 +97,114 @@ class notacontroller extends Controller
         ->orwhere('tgl','like','%'.$request->cari.'%')
         ->get();
 
-        return view('nota.pencarian',['data'=>$data]);
+        return view('nota.pencarian',['data'=>$data,'cari'=>$request->cari]);
     }
 
     //==============================================================================
     public function hapuspilihan(Request $request){
-        
+        $data ='';
+        if(!$request->pilihid){
+            return back()->with('statuserror','Tidak ada data yang dipilih');
+        }else{
+            foreach($request->pilihid as $id){
+                DB::table('nota')->where('id',$id)->delete();
+            }
+        }
+        return back()->with('status','Data Berhasil Dimanipulasi');
+    }
+
+    //=======================================================================
+    public function tampillunas(){
+         $data = DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('status','lunas')
+        ->orderby('id','desc')
+        ->get();
+        return view('nota.tampilsukses',['data'=>$data]);
+    }
+
+     //======================================================================
+    public function tampilbelumlunas(){
+        $data = DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('status','belum lunas')
+        ->orderby('id','desc')
+        ->get();
+        return view('nota.tampilbelumsukses',['data'=>$data]);
+    }
+
+    //======================================================================
+    public function tampilcancel(){
+        $data = DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('status','cancel')
+        ->orderby('id','desc')
+        ->get();
+        return view('nota.tampilcancel',['data'=>$data]);
+    }
+
+    //======================================================================
+    public function cetaknota($id){
+        $data = DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('kode',$id)
+        ->get();
+
+        $datadetail = DB::table('detail_nota')->where('kode_nota',$id)->get();
+        return view('nota.cetakulang',['data'=>$data,'datadetail'=>$datadetail]);
+
+    }
+
+    //======================================================================
+    public function editnota($kode){
+        $data = DB::table('nota')->where('kode',$kode)->get();
+        $datadetail = DB::table('detail_nota')->where('kode_nota',$kode)->get();
+        $datauser = DB::table('users')->where('level','=','pengguna')->get();
+        return view('nota.editnota',['datauser'=>$datauser,'data'=>$data,'datadetail'=>$datadetail]);
+    }
+
+    public function updatenota(Request $request){
+        $jumlah = $request->jumlah;
+        $harga = $request->harga;
+        $jumlahbayar = $request->jumlahbayar;
+        //----------------------------------------------
+        $subtotal = $jumlah * $harga;
+        $dibayar = $jumlahbayar * $harga;
+        $kekurangan = $subtotal - $dibayar;
+        DB::table('detail_nota')
+        ->where('id',$request->id)
+        ->update([
+            'barang'=>$request->barang,
+            'jumlah'=>$jumlah,
+            'jumlah_dibayar'=>$jumlahbayar,
+            'harga'=>$harga,
+            'dibayar'=>$dibayar,
+            'kekurangan'=>$kekurangan,
+            'subtotal'=>$subtotal
+        ]);
+        //-----------------------------------------------------
+        $totalnya = 0;
+        $totaldibayar = 0;
+        $totalkekurangan = 0;
+
+        $data = DB::table('detail_nota')->where('kode_nota',$request->kodenota)->get();
+        foreach ($data as $row) {
+        $totalnya += $row->subtotal;
+        $totaldibayar +=$row->dibayar;
+        $totalkekurangan +=$row->kekurangan;    
+        }
+
+        DB::table('nota')->where('kode',$request->kodenota)
+        ->update([
+            'pembuat'=>Auth::user()->username,
+            'total'=>$totalnya,
+            'dibayar'=>$totaldibayar,
+            'kekurangan'=>$totalkekurangan
+        ]);
+        return redirect('editnota/'.$request->kodenota)->with('status','Data Berhasil Diubah');
     }
 }

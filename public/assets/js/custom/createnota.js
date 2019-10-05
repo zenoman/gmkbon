@@ -26,7 +26,7 @@
 		                          '<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">'+
 		                              '<label>Nama Barang Ke-'+counter+'</label>'+
 		                                    '<div class="nk-int-st">'+
-		                                        '<input type="text" class="form-control" name="barang[]">'+
+		                                        '<input type="text" class="form-control" name="barang[]" id="barang'+counter+'">'+
 		                                        '<br>'+
 		                                    '</div>'+
 		                          '</div>'+
@@ -56,6 +56,14 @@
 		                          '</div>'+
 		                          '<div class="row">'+
 		                          '<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">'+
+		                              '<label>Total</label>'+
+		                                    '<div class="nk-int-st">'+
+		                                        '<input type="number" class="form-control" id="total'+counter+'" value="0"  name="total[]" readonly>'+
+		                                        '<br>'+
+		                                    '</div>'+
+		                          '</div>'+
+		                          '<div class="row">'+
+		                          '<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">'+
 		                              '<label>Dibayar</label>'+
 		                                    '<div class="nk-int-st">'+
 		                                        '<input type="number" class="form-control" value="0" name="dibayar[]" id="dibayar'+counter+'" readonly>'+
@@ -67,14 +75,6 @@
 		                              '<label>Kekurangan</label>'+
 		                                    '<div class="nk-int-st">'+
 		                                        '<input type="number" class="form-control" id="kekurangan'+counter+'" value="0"  name="kekurangan[]" readonly>'+
-		                                        '<br>'+
-		                                    '</div>'+
-		                          '</div>'+
-		                          '<div class="row">'+
-		                          '<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">'+
-		                              '<label>Total</label>'+
-		                                    '<div class="nk-int-st">'+
-		                                        '<input type="number" class="form-control" id="total'+counter+'" value="0"  name="total[]" readonly>'+
 		                                        '<br>'+
 		                                    '</div>'+
 		                          '</div>'+
@@ -193,3 +193,41 @@
 
 			return rupiah;
 		}
+
+		function cetaknota(){
+			if(realnomor == 0){
+				alert('Oops Di isi dulu dong notanya !');
+				return false;
+			}else{
+				var no=0;
+				var rows2='';
+				for (var i = 0; i < realnomor; i++){
+				no +=1;
+                rows2 = rows2 + '<tr>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' +no+'</td>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' +$('#jumlah'+nomornya[i]).val();+' Pcs </td>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">' + $('#barang'+nomornya[i]).val();+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah($('#harga'+nomornya[i]).val())+'</td>';
+                rows2 = rows2 + '<td align="center" style="border: 1px solid black;">'+$('#jumlahbayar'+nomornya[i]).val();+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah($('#total'+nomornya[i]).val())+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah($('#dibayar'+nomornya[i]).val())+'</td>';
+                rows2 = rows2 + '<td align="right" style="border: 1px solid black;"> Rp. ' +rupiah($('#kekurangan'+nomornya[i]).val())+'</td>';
+                rows2 = rows2 + '</tr>';
+				}
+				$('#datacetak').html(rows2);
+				$('#datacetak1').html(rows2);
+				$('#datatotal').html('Rp. '+rupiah($('#total_harganya').val()));
+				$('#datatotal1').html('Rp. '+rupiah($('#total_harganya').val()));
+				$('#datadibayar').html('Rp. '+rupiah($('#total_bayar').val()));
+				$('#datadibayar1').html('Rp. '+rupiah($('#total_bayar').val()));
+				$('#datakekurangan').html('Rp. '+rupiah($('#kembalianya').val()));
+				$('#datakekurangan1').html('Rp. '+rupiah($('#kembalianya').val()));
+				var divToPrint=document.getElementById('hidden_div');
+				var newWin=window.open('','Print-Window');
+				newWin.document.open();
+				newWin.document.write('<html><body onload="window.print();window.close()">'+divToPrint.innerHTML+'</body></html>');
+				newWin.document.close();
+				return true;
+			}
+		}
+		window.cetaknota = cetaknota;

@@ -16,13 +16,12 @@
                   </div>
                   <div class="breadcomb-ctn">
                     <h2>Nota</h2>
-                    <p>List Semua Nota</p>
+                    <p>Hasil Pencarian "<b>{{$cari}}</b>"</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-xs-6 col-xs-3 text-right">
-                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalone"><i class="fa fa-search"></i> Cari Data</button>
-                
+                 
               </div>
             </div>
           </div>
@@ -48,7 +47,7 @@
                             </div>
                             @endif
                         <div class="table-responsive">
-                          <form action="{{url('/transaksi/hapuspilihan')}}" method="post">
+                          <form action="{{url('/nota/hapuspilihan')}}" method="post">
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                     <tr>

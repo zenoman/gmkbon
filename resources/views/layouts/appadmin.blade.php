@@ -114,9 +114,11 @@
                                 <li>
                                     <a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a>
                                 </li>
+                                @if(Auth::user()->level=='super admin')
                                 <li>
                                     <a href="{{url('admin')}}"><i class="fa fa-child"></i> Admin</a>
                                 </li>
+                                @endif
                                 <li>
                                     <a data-toggle="collapse" data-target="#Pagemob" href="#"><i class="fa fa-file"></i> Transaksi</a>
                                     <ul id="Pagemob" class="collapse dropdown-header-top">
@@ -154,11 +156,15 @@
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a>
                         </li>
+                        @if(Auth::user()->level=='super admin')
                         <li><a href="{{url('admin')}}"><i class="fa fa-child"></i> Admin</a>
                         </li>
+                        @endif
                         <li><a href="{{url('user')}}"><i class="fa fa-users"></i> User</a>
                         </li>
                         <li><a data-toggle="tab" href="#Interface"><i class="fa fa-list"></i> Nota</a>
+                        </li>
+                        <li><a href="{{url('user')}}"><i class="fa fa-comment"></i> Pengajuan</a>
                         </li>
                         <li><a href="#"><i class="fa fa-file"></i> Laporan</a>
                         </li>
@@ -175,9 +181,11 @@
                                 <i class="fa fa-list-ol"></i> List Semua Nota
                                 </a>
                                 </li>
-                                <li><a href="#"><i class="fa fa-check"></i> List Nota Lunas</a>
+                                <li><a href="{{route('tampil-nota-lunas')}}"><i class="fa fa-check"></i> List Nota Lunas</a>
                                 </li>
-                                <li><a href="#"><i class="fa fa-close"></i> List Semua Belum Lunas</a>
+                                <li><a href="{{route('tampil-nota-belumlunas')}}"><i class="fa fa-close"></i> List Nota Belum Lunas</a>
+                                </li>
+                                <li><a href="{{route('tampil-nota-cancel')}}"><i class="fa fa-ban"></i> List Nota Dicancel</a>
                                 </li>
                             </ul>
                         </div>

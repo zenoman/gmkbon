@@ -16,13 +16,12 @@
                   </div>
                   <div class="breadcomb-ctn">
                     <h2>Nota</h2>
-                    <p>List Semua Nota</p>
+                    <p>List Nota Lunas</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-xs-6 col-xs-3 text-right">
-                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalone"><i class="fa fa-search"></i> Cari Data</button>
-                
+               
               </div>
             </div>
           </div>
@@ -57,7 +56,6 @@
                                         <th>Kode Nota</th>
                                         <th>Tanggal</th>
                                         <th>Pembeli</th>
-                                        <th>Pembuat</th>
                                         <th>Total</th>
                                         <th>Dibayar</th>
                                         <th>Kekurangan</th>
@@ -76,7 +74,6 @@
                                       <td>{{$row->tgl}}</td>
 
                                       <td>{{$row->namauser}}</td>
-                                      <td>{{$row->pembuat}}</td>
                                       <td>
                                         {{"Rp ". number_format($row->total,0,',','.')}}
                                       </td>
@@ -93,18 +90,13 @@
                                       <td class="text-center">
                                         <button
                                         type="button" 
-                                        class="btn btn-sm btn-primary tampil"
+                                        class="btn btn-primary tampil"
                                         data-kodenota="{{$row->kode}}"
                                         data-tanggal="{{$row->tgl}}"
                                         data-status="{{$row->status}}"
-                                        data-pembeli="{{$row->namauser}}"
-                                        data-total="{{$row->total}}"
-                                        data-dibayar="{{$row->dibayar}}"
-                                        data-kekurangan="{{$row->kekurangan}}">
+                                        data-pembeli="{{$row->namauser}}">
                                           <i class="fa fa-eye"></i>
                                         </button>
-                                        <a href="{{url('cetaknota/'.$row->kode)}}" class="btn btn-sm btn-success" target="blank()"><i class="fa fa-print"></i></a>
-                                        <a href="{{url('editnota/'.$row->kode)}}" class="btn btn-sm btn-warning"><i class="fa fa-wrench"></i></a>
                                       </td>
                                       <td align="center">&nbsp;&nbsp;&nbsp;<input name="pilihid[]" type="checkbox" id="checkbox[]" value="{{$row->id}}"></td>
                                   </tr>
@@ -116,7 +108,6 @@
                                         <th>Kode Nota</th>
                                         <th>Tanggal</th>
                                         <th>Pembeli</th>
-                                        <th>Pembuat</th>
                                         <th>Total</th>
                                         <th>Dibayar</th>
                                         <th>Kekurangan</th>
@@ -136,7 +127,6 @@
          
             {{csrf_field()}}
                         </form>
-                             {{ $data->links() }}
                         </div>
                     </div>
                 </div>
@@ -201,14 +191,6 @@
                     </td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr class="text-center">
-                      <th colspan="5">Total</th>
-                      <th><b id="totalnota"></b></th>
-                      <th><b id="dibayarnota"></b></th>
-                      <th><b id="kekurangannota"></b></th>
-                    </tr>
-                </tfoot>
                </table>
               </div>
               <div class="modal-footer">
@@ -249,7 +231,7 @@
   $(document).ready(function() {
      $('#data-table-basic').DataTable({
             responsive: true,
-            "paging":false
+            "paging":true
         });
   });
 
@@ -259,9 +241,6 @@
     var tanggal = $(this).data('tanggal');
     var status = $(this).data('status');
     var pembeli = $(this).data('pembeli');
-    var total = $(this).data('total');
-    var dibayar = $(this).data('dibayar');
-    var kekurangan = $(this).data('kekurangan');
     //------------------------------------------------
 
     //------------------------------------------------
@@ -269,9 +248,6 @@
     $('#printpembeli').html(pembeli);
     $('#printtgl').html(tanggal);
     $('#printstatus').html(status);
-    $('#totalnota').html('Rp.'+rupiah(total));
-    $('#dibayarnota').html('Rp.'+rupiah(dibayar));
-    $('#kekurangannota').html('Rp.'+rupiah(kekurangan));
     //-------------------------------------------------
     $.ajax({
                 type:'GET',
@@ -287,10 +263,10 @@
                         rows = rows + '<td class="text-center">' +value.barang+'</td>';
                         rows = rows + '<td class="text-center">'+value.jumlah+' Pcs</td>';
                         rows = rows + '<td class="text-center">' +value.jumlah_dibayar+' Pcs</td>';
-                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.harga)+'</td>';
-                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.subtotal)+'</td>';
-                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.dibayar)+'</td>';
-                        rows = rows + '<td class="text-right"> Rp. ' +rupiah(value.kekurangan)+'</td>';
+                        rows = rows + '<td class="text-right">' +value.harga+'</td>';
+                        rows = rows + '<td class="text-right">' +value.subtotal+'</td>';
+                        rows = rows + '<td class="text-right">' +value.dibayar+'</td>';
+                        rows = rows + '<td class="text-right">' +value.kekurangan+'</td>';
                         rows = rows + '</tr>';
                 });
                      $('#tubuhnya').html(rows);
@@ -303,20 +279,6 @@
     for(var i=0, n=checkboxes.length;i<n;i++) {
       checkboxes[i].checked = source.checked;
     }
-    }
-  //=================================================================
-    function rupiah(bilangan){
-      var number_string = bilangan.toString(),
-      sisa  = number_string.length % 3,
-      rupiah  = number_string.substr(0, sisa),
-      ribuan  = number_string.substr(sisa).match(/\d{3}/gi);
-      
-    if (ribuan) {
-      separator = sisa ? '.' : '';
-      rupiah += separator + ribuan.join('.');
-    }
-
-      return rupiah;
     }
     </script>
 @endsection

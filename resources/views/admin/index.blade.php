@@ -21,7 +21,7 @@
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3 text-right">
-                @if(Auth::user()->level!='admin')
+                @if(Auth::user()->level=='super admin')
                 <a href="{{url('admin/create')}}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Tambah Data</a>
                 @endif
               </div>
