@@ -93,7 +93,7 @@
                                       <td class="text-center">
                                         <button
                                         type="button" 
-                                        class="btn btn-sm btn-primary tampil"
+                                        class="btn btn-xs btn-primary tampil"
                                         data-kodenota="{{$row->kode}}"
                                         data-tanggal="{{$row->tgl}}"
                                         data-status="{{$row->status}}"
@@ -103,8 +103,8 @@
                                         data-kekurangan="{{$row->kekurangan}}">
                                           <i class="fa fa-eye"></i>
                                         </button>
-                                        <a href="{{url('cetaknota/'.$row->kode)}}" class="btn btn-sm btn-success" target="blank()"><i class="fa fa-print"></i></a>
-                                        <a href="{{url('editnota/'.$row->kode)}}" class="btn btn-sm btn-warning"><i class="fa fa-wrench"></i></a>
+                                        <a href="{{url('cetaknota/'.$row->kode)}}" class="btn btn-xs btn-success" target="blank()"><i class="fa fa-print"></i></a>
+                                        <a href="{{url('editnota/'.$row->kode)}}" class="btn btn-xs btn-warning"><i class="fa fa-wrench"></i></a>
                                       </td>
                                       <td align="center">&nbsp;&nbsp;&nbsp;<input name="pilihid[]" type="checkbox" id="checkbox[]" value="{{$row->id}}"></td>
                                   </tr>

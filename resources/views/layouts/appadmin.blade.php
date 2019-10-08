@@ -136,9 +136,11 @@
                                 </li>
                         <li><a href="{{url('laporan/caridata')}}"><i class="fa fa-file"></i> Laporan</a>
                         </li>
-                        <li><a href="{{url('backup/caridata')}}"><i class="fa fa-download"></i> Backup</a>
+                        @if(Auth::user()->level=='super admin')
+                        <li>
+                            <a href="{{url('backup/caridata')}}"><i class="fa fa-download"></i> Backup</a>
                         </li>
-                                
+                        @endif
                                 
                             </ul>
                         </nav>
@@ -164,12 +166,14 @@
                         </li>
                         <li><a data-toggle="tab" href="#Interface"><i class="fa fa-list"></i> Nota</a>
                         </li>
-                        <li><a href="{{url('user')}}"><i class="fa fa-comment"></i> Pengajuan</a>
+                        <li><a data-toggle="tab" href="#pengajuan"><i class="fa fa-comment"></i> Pengajuan</a>
                         </li>
                         <li><a href="#"><i class="fa fa-file"></i> Laporan</a>
                         </li>
+                        @if(Auth::user()->level=='super admin')
                         <li><a href="#"><i class="fa fa-download"></i> Backup</a>
                         </li>
+                        @endif
                     </ul>
                     <div class="tab-content custom-menu-content">
                         
@@ -185,12 +189,19 @@
                                 </li>
                                 <li><a href="{{route('tampil-nota-belumlunas')}}"><i class="fa fa-close"></i> List Nota Belum Lunas</a>
                                 </li>
-                                <li><a href="{{route('tampil-nota-cancel')}}"><i class="fa fa-ban"></i> List Nota Dicancel</a>
+                            </ul>
+                        </div>
+                        <div id="pengajuan" class="tab-pane notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                            <li><a href="{{route('pengajuan-nota')}}"><i class="fa fa-file"></i> Pengajuan Nota</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-cogs"></i> Pengajuan Edit</a>
                                 </li>
                             </ul>
                         </div>
-                        
                     </div>
+                    
                 </div>
             </div>
         </div>

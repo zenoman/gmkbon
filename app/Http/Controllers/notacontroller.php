@@ -75,6 +75,7 @@ class notacontroller extends Controller
         $data = DB::table('nota')
         ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
         ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('status','!=','pengajuan')
         ->orderby('id','desc')
         ->paginate(30);
         return view('nota.tampilsemua',['data'=>$data]);
@@ -161,12 +162,31 @@ class notacontroller extends Controller
 
     //======================================================================
     public function editnota($kode){
-        $data = DB::table('nota')->where('kode',$kode)->get();
+        $data = 
+        DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('nota.kode',$kode)
+        ->get();
         $datadetail = DB::table('detail_nota')->where('kode_nota',$kode)->get();
         $datauser = DB::table('users')->where('level','=','pengguna')->get();
         return view('nota.editnota',['datauser'=>$datauser,'data'=>$data,'datadetail'=>$datadetail]);
     }
 
+    //======================================================================
+    public function editnotabelumlunas($kode){
+        $data = 
+        DB::table('nota')
+        ->select(DB::raw('nota.*,users.username as namauser,users.name as namapembeli'))
+        ->leftjoin('users','users.id','=','nota.pembeli')
+        ->where('nota.kode',$kode)
+        ->get();
+        $datadetail = DB::table('detail_nota')->where('kode_nota',$kode)->get();
+        $datauser = DB::table('users')->where('level','=','pengguna')->get();
+        return view('nota.editnotabelumlunas',['datauser'=>$datauser,'data'=>$data,'datadetail'=>$datadetail]);
+    }
+
+    //=========================================================================
     public function updatenota(Request $request){
         $jumlah = $request->jumlah;
         $harga = $request->harga;
@@ -190,6 +210,7 @@ class notacontroller extends Controller
         $totalnya = 0;
         $totaldibayar = 0;
         $totalkekurangan = 0;
+        $status ='';
 
         $data = DB::table('detail_nota')->where('kode_nota',$request->kodenota)->get();
         foreach ($data as $row) {
@@ -197,14 +218,104 @@ class notacontroller extends Controller
         $totaldibayar +=$row->dibayar;
         $totalkekurangan +=$row->kekurangan;    
         }
-
+        if($totaldibayar < $totalnya){
+            $status='belum lunas';
+        }else if($totaldibayar >= $totalnya){
+            $status='lunas';
+        }
         DB::table('nota')->where('kode',$request->kodenota)
         ->update([
             'pembuat'=>Auth::user()->username,
             'total'=>$totalnya,
             'dibayar'=>$totaldibayar,
-            'kekurangan'=>$totalkekurangan
+            'kekurangan'=>$totalkekurangan,
+            'status'=>$status
         ]);
-        return redirect('editnota/'.$request->kodenota)->with('status','Data Berhasil Diubah');
+        return back()->with('status','Data berhasil diubah');
+        //return redirect('editnota/'.$request->kodenota)->with('status','Data Berhasil Diubah');
+    }
+
+    //======================================================================
+    public function hapusdetailnota($id,$kode){
+        DB::table('detail_nota')->where('id',$id)->delete();
+
+        //-----------------------------------------------------
+        $totalnya = 0;
+        $totaldibayar = 0;
+        $totalkekurangan = 0;
+        $status ='';
+
+        $data = DB::table('detail_nota')->where('kode_nota',$kode)->get();
+        foreach ($data as $row) {
+        $totalnya += $row->subtotal;
+        $totaldibayar +=$row->dibayar;
+        $totalkekurangan +=$row->kekurangan;    
+        }
+        if($totaldibayar < $totalnya){
+            $status='belum lunas';
+        }else if($totaldibayar >= $totalnya){
+            $status='lunas';
+        }
+
+        DB::table('nota')->where('kode',$kode)
+        ->update([
+            'pembuat'=>Auth::user()->username,
+            'total'=>$totalnya,
+            'dibayar'=>$totaldibayar,
+            'kekurangan'=>$totalkekurangan,
+            'status'=>$status
+        ]);
+        return back()->with('status','Data berhasil diubah');
+        //return redirect('editnota/'.$kode)->with('status','Data Berhasil Diubah');
+    }
+
+    //============================================================================
+    public function tambahdetailbarang(Request $request){
+        $jumlah = $request->jumlah;
+        $harga = $request->harga;
+        $jumlahbayar = $request->jumlahbayar;
+        //----------------------------------------------
+        $subtotal = $jumlah * $harga;
+        $dibayar = $jumlahbayar * $harga;
+        $kekurangan = $subtotal - $dibayar;
+        DB::table('detail_nota')
+        ->insert([
+            'kode_nota'=>$request->kodenota,
+            'barang'=>$request->barang,
+            'jumlah'=>$jumlah,
+            'jumlah_dibayar'=>$jumlahbayar,
+            'harga'=>$harga,
+            'dibayar'=>$dibayar,
+            'kekurangan'=>$kekurangan,
+            'subtotal'=>$subtotal
+        ]);
+
+        //-----------------------------------------------------
+        $totalnya = 0;
+        $totaldibayar = 0;
+        $totalkekurangan = 0;
+        $status ='';
+
+        $data = DB::table('detail_nota')->where('kode_nota',$request->kodenota)->get();
+        foreach ($data as $row) {
+        $totalnya += $row->subtotal;
+        $totaldibayar += $row->dibayar;
+        $totalkekurangan += $row->kekurangan;    
+        }
+        if($totaldibayar < $totalnya){
+            $status='belum lunas';
+        }else if($totaldibayar >= $totalnya){
+            $status='lunas';
+        }
+        DB::table('nota')->where('kode',$request->kodenota)
+        ->update([
+            'pembuat'=>Auth::user()->username,
+            'total'=>$totalnya,
+            'dibayar'=>$totaldibayar,
+            'kekurangan'=>$totalkekurangan,
+            'status'=>$status
+        ]);
+        return back()->with('status','Data berhasil diubah');
+        //return redirect('editnota/'.$request->kodenota)->with('status','Data Berhasil Diubah');       
     }
 }

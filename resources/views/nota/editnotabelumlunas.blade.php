@@ -127,7 +127,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formtambahbarang">Tambah Barang</button>
-                            <a href="{{route('tampil-nota')}}" class="btn btn-danger">
+                            <a href="{{route('tampil-nota-belumlunas')}}" class="btn btn-danger">
                               Kembali
                             </a>
                             </div>

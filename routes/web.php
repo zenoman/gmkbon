@@ -25,4 +25,11 @@ Route::post('nota','notacontroller@store');
 Route::get('nota/caridata','notacontroller@caridata');
 Route::post('nota/hapuspilihan','notacontroller@hapuspilihan');
 Route::get('editnota/{kode}','notacontroller@editnota');
+Route::get('editnotabelumlunas/{kode}','notacontroller@editnotabelumlunas');
 Route::post('nota/editdata','notacontroller@updatenota');
+Route::get('hapusdetailnota/{id}/{nota}','notacontroller@hapusdetailnota');
+Route::post('nota/tambahdetailnya','notacontroller@tambahdetailbarang');
+
+//pengajuan
+Route::get('pengajuan/nota','pengajuancontroller@listnota')->name('pengajuan-nota');
+Route::get('terimanota/{kode}','pengajuancontroller@terimanota');
