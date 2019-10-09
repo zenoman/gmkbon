@@ -22,6 +22,17 @@ class pengajuancontroller extends Controller
         ->get();
         return view('pengajuan.pengajuannota',['data'=>$data]);
     }
+    
+    //==================================================================
+    public function pengajuan(){
+        $data = DB::table('pengajuan')
+        ->select(DB::raw('pengajuan.*,users.username as namauser,detail_nota.barang'))
+        ->leftjoin('users','users.id','=','pengajuan.pembeli')
+        ->leftjoin('detail_nota','detail_nota.id','=','pengajuan.kode_barang')
+        ->orderby('pengajuan.id','desc')
+        ->get();
+        return view('pengajuan.pengajuaneditnota',['data'=>$data]);
+    }
 
     //===============================================================
     public function terimanota($kode){
@@ -52,5 +63,95 @@ class pengajuancontroller extends Controller
         ]);
 
         return back()->with('status','Data Berhasil Disimpan');
+    }
+
+    public function terimaeditnota($id){
+        
+        $jumlahbaru = 0;
+        $kodebarang = 0;
+        $kodenota = '';
+
+        $data = DB::table('pengajuan')->where('id',$id)->get();
+        foreach($data as $row){
+            $kodenota = $row->kode_nota;
+            $jumlahbaru = $row->jumlah;
+            $databarang = DB::table('detail_nota')->where('id',$row->kode_barang)->get();
+
+            foreach($databarang as $row2){
+                $newjumlah = $row2->jumlah_dibayar + $jumlahbaru;
+                $newdibayar = $newjumlah*$row2->harga;
+                $newkekurangan = $row2->subtotal - $newdibayar;
+
+                DB::table('detail_nota')
+                ->where('id',$row->kode_barang)
+                ->update([
+                    'jumlah_dibayar'=>$newjumlah,
+                    'dibayar'=>$newdibayar,
+                    'kekurangan'=>$newkekurangan,
+                ]);
+
+                DB::table('pengajuan')
+                ->where('id',$id)
+                ->update([
+                    'admin'=>Auth::user()->username,
+                    'konfirmasi'=>'Y'
+                ]);
+            }
+        }
+        $data2 = DB::table('detail_nota')
+        ->where('kode_nota',$kodenota)
+        ->get();
+
+        $totalbayar = 0;
+        $total = 0;
+        $totalkekurangan =0;
+        $status='';
+
+        foreach($data2 as $row3){
+            $totalbayar += $row3->dibayar;
+            $total += $row3->subtotal;
+            $totalkekurangan += $row3->kekurangan;
+        }
+
+        if($totalbayar < $total){
+            $status='belum lunas';
+        }else if($totalbayar >= $total){
+            $status='lunas';
+        }
+
+        DB::table('nota')
+        ->where('kode',$kodenota)
+        ->update([
+            'status'=>$status,
+            'total'=>$total,
+            'dibayar'=>$totalbayar,
+            'kekurangan'=>$totalkekurangan,
+            'pembuat'=>Auth::user()->username
+        ]);
+
+        return back()->with('status','Data Berhasil Disimpan');
+        
+    }
+
+    public function hapuspilihan(Request $request){
+        if(!$request->pilihid){
+            return back()->with('statuserror','Tidak ada data yang dipilih');
+        }else{
+            foreach($request->pilihid as $id){
+                DB::table('pengajuan')->where('id',$id)->delete();
+            }
+        }
+        return back()->with('status','Data Berhasil Dimanipulasi');
+    }
+
+    public function hapusnotapilihan(Request $request){
+         if(!$request->pilihid){
+            return back()->with('statuserror','Tidak ada data yang dipilih');
+        }else{
+            foreach($request->pilihid as $id){
+                DB::table('nota')->where('id',$id)->delete();
+            }
+        }
+        return back()->with('status','Data Berhasil Dimanipulasi');
     }
 }

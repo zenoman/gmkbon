@@ -103,7 +103,6 @@ class notacontroller extends Controller
 
     //==============================================================================
     public function hapuspilihan(Request $request){
-        $data ='';
         if(!$request->pilihid){
             return back()->with('statuserror','Tidak ada data yang dipilih');
         }else{

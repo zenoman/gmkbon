@@ -47,7 +47,7 @@
                             </div>
                             @endif
                         <div class="table-responsive">
-                          <form action="{{url('/nota/hapuspilihan')}}" method="post">
+                          <form action="{{url('/pengajuan/hapusnotapilihan')}}" method="post">
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                     <tr>
@@ -244,7 +244,7 @@
 $(document).ready(function() {
  $('#data-table-basic').DataTable({
         responsive: true,
-        "paging":false
+        "paging":true
     });
 });
 

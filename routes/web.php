@@ -32,4 +32,12 @@ Route::post('nota/tambahdetailnya','notacontroller@tambahdetailbarang');
 
 //pengajuan
 Route::get('pengajuan/nota','pengajuancontroller@listnota')->name('pengajuan-nota');
+Route::get('pengajuan/editnota','pengajuancontroller@pengajuan')->name('pengajuan-edit');
 Route::get('terimanota/{kode}','pengajuancontroller@terimanota');
+Route::get('terimaeditnota/{id}','pengajuancontroller@terimaeditnota');
+Route::post('pengajuan/hapuspilihan','pengajuancontroller@hapuspilihan');
+Route::post('/pengajuan/hapusnotapilihan','pengajuancontroller@hapusnotapilihan');
+
+//laporan
+Route::get('laporan','laporancontroller@index');
+Route::post('laporan/tampil','laporancontroller@tampil');

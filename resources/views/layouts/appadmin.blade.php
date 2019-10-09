@@ -168,7 +168,7 @@
                         </li>
                         <li><a data-toggle="tab" href="#pengajuan"><i class="fa fa-comment"></i> Pengajuan</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-file"></i> Laporan</a>
+                        <li><a href="{{url('laporan')}}"><i class="fa fa-file"></i> Laporan</a>
                         </li>
                         @if(Auth::user()->level=='super admin')
                         <li><a href="#"><i class="fa fa-download"></i> Backup</a>
@@ -196,7 +196,7 @@
                             <li><a href="{{route('pengajuan-nota')}}"><i class="fa fa-file"></i> Pengajuan Nota</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-cogs"></i> Pengajuan Edit</a>
+                                <a href="{{route('pengajuan-edit')}}"><i class="fa fa-cogs"></i> Pengajuan Edit</a>
                                 </li>
                             </ul>
                         </div>
