@@ -21,7 +21,7 @@
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 col-xs-3 text-right">
-                <a href="{{url('admin/create')}}" class="btn btn-success btn-sm"><i class="fa fa-download"></i> Exsport Excel</a>
+                <a href="{{url('exsportdetailnota/'.$tglmulai.'/'.$tglselesai)}}" class="btn btn-success btn-sm"><i class="fa fa-download"></i> Exsport Excel</a>
               </div>
             </div>
           </div>

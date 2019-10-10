@@ -41,3 +41,5 @@ Route::post('/pengajuan/hapusnotapilihan','pengajuancontroller@hapusnotapilihan'
 //laporan
 Route::get('laporan','laporancontroller@index');
 Route::post('laporan/tampil','laporancontroller@tampil');
+Route::get('exsportnota/{tglmulai}/{tglselesai}','laporancontroller@exsportnota');
+Route::get('exsportdetailnota/{tglmulai}/{tglselesai}','laporancontroller@exsportdetailnota');
