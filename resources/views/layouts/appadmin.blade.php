@@ -136,12 +136,6 @@
                                 </li>
                         <li><a href="{{url('laporan/caridata')}}"><i class="fa fa-file"></i> Laporan</a>
                         </li>
-                        @if(Auth::user()->level=='super admin')
-                        <li>
-                            <a href="{{url('backup/caridata')}}"><i class="fa fa-download"></i> Backup</a>
-                        </li>
-                        @endif
-                                
                             </ul>
                         </nav>
                     </div>

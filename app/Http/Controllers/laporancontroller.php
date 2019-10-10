@@ -11,6 +11,10 @@ use App\Exports\DetailNotaExport;
 
 class laporancontroller extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
     	return view('laporan.index');
@@ -42,5 +46,28 @@ class laporancontroller extends Controller
     public function exsportdetailnota($tglmulai,$tglselesai){
         $namafile = "Detail Nota Tgl ".$tglmulai." sampai ".$tglselesai.".xlsx";
         return Excel::download(new DetailNotaExport($tglmulai,$tglselesai),$namafile);    
+    }
+
+    public function hapusnota(Request $request){
+        if(!$request->pilihid){
+            return back()->with('statuserror','Tidak ada data yang dipilih');
+        }else{
+            foreach($request->pilihid as $id){
+                DB::table('nota')->where('id',$id)->delete();
+            }
+        }
+        return back()->with('status','Data Berhasil Hapus');
+    
+    }
+
+    public function hapusdetailnota(Request $request){
+        if(!$request->pilihid){
+            return back()->with('statuserror','Tidak ada data yang dipilih');
+        }else{
+            foreach($request->pilihid as $id){
+                DB::table('detail_nota')->where('id',$id)->delete();
+            }
+        }
+        return back()->with('status','Data Berhasil Hapus');
     }
 }

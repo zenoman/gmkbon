@@ -42,6 +42,7 @@
                             </div>
                             @endif
                         <div class="table-responsive">
+                          <form action="{{url('/laporan/hapusnota')}}" method="POST">
                             <table id="data-table-basic" class="table table-striped">
                                 <thead>
                                     <tr>
@@ -53,6 +54,7 @@
                                         <th>Dibayar</th>
                                         <th>Kekurangan</th>
                                         <th>Status</th>
+                                        <th  class="text-center"><input type="checkbox" onclick="toggle(this)"/></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +69,7 @@
                                     <td>{{"Rp ". number_format($row->dibayar,0,',','.')}}</td>
                                     <td>{{"Rp ". number_format($row->kekurangan,0,',','.')}}</td>
                                     <td>{{$row->status}}</td>
+                                    <td align="center">&nbsp;&nbsp;&nbsp;<input name="pilihid[]" type="checkbox" id="checkbox[]" value="{{$row->id}}"></td>
                                   </tr>
                                   @endforeach
                                 </tbody>
@@ -80,9 +83,18 @@
                                         <th>Dibayar</th>
                                         <th>Kekurangan</th>
                                         <th>Status</th>
+                                        <th  class="text-center"><input type="checkbox" onclick="toggle(this)"/></th>
                                     </tr>
                                 </tfoot>
-                            </table> 
+                            </table>
+                             <hr>
+                                <div class="nk-int-st" align="right">
+                                <div class="bootstrap-select fm-cmp-mg">
+                                     <button onclick="return confirm('Yakin nih datanya udah bener ?')" type="submit" class="btn btn-danger">Hapus Data Terpilih</button>
+                                </div>
+                                </div>
+                                {{csrf_field()}}
+                        </form> 
                         </div>
                     </div>
                 </div>
@@ -91,6 +103,14 @@
     </div>
 @endsection
 @section('js')
- <script src="{{asset('assets/js/data-table/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/data-table/data-table-act.js')}}"></script>
+  <script src="{{asset('assets/js/data-table/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('assets/js/data-table/data-table-act.js')}}"></script>
+  <script>
+    function toggle(source) {
+    checkboxes = document.getElementsByName('pilihid[]');
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;
+    }
+    }
+  </script>
 @endsection

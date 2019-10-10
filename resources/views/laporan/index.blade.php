@@ -36,7 +36,7 @@
                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="form-element-list">
-                      <form action="{{url('laporan/tampil')}}" method="post">
+                      <form action="{{url('laporan/tampil')}}" method="get">
                          @if(session('status'))
                         <div class="alert alert-danger alert-dismissible alert-mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"><i class="notika-icon notika-close"></i></span></button> {{ session('status') }}
