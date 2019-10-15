@@ -152,20 +152,32 @@
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
                         <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a>
                         </li>
+                        @if(Auth::user()->level=='pengguna')
+                        <li><a data-toggle="tab" href="#Pengajuanuser"><i class="fa fa-comment"></i> Pengajuan</a>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='pengguna')
+                        <li><a href="{{route('list-nota-user')}}"><i class="fa fa-file"></i> Nota Saya</a>
+                        </li>
+                        @endif
                         @if(Auth::user()->level=='super admin')
                         <li><a href="{{url('admin')}}"><i class="fa fa-child"></i> Admin</a>
                         </li>
                         @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
                         <li><a href="{{url('user')}}"><i class="fa fa-users"></i> User</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
                         <li><a data-toggle="tab" href="#Interface"><i class="fa fa-list"></i> Nota</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
                         <li><a data-toggle="tab" href="#pengajuan"><i class="fa fa-comment"></i> Pengajuan</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
                         <li><a href="{{url('laporan')}}"><i class="fa fa-file"></i> Laporan</a>
-                        </li>
-                        @if(Auth::user()->level=='super admin')
-                        <li><a href="#"><i class="fa fa-download"></i> Backup</a>
                         </li>
                         @endif
                     </ul>
@@ -182,6 +194,19 @@
                                 <li><a href="{{route('tampil-nota-lunas')}}"><i class="fa fa-check"></i> List Nota Lunas</a>
                                 </li>
                                 <li><a href="{{route('tampil-nota-belumlunas')}}"><i class="fa fa-close"></i> List Nota Belum Lunas</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="Pengajuanuser" class="tab-pane notika-tab-menu-bg animated flipInX">
+                            <ul class="notika-main-menu-dropdown">
+                                <li>
+                                    <a href="{{route('pengajuan-nota-user')}}"><i class="fa fa-plus"></i> Pengajuan Nota
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('pengajuan-edit-nota-user')}}">
+                                        <i class="fa fa-wrench"></i> Pengajuan Edit Nota
+                                    </a>
                                 </li>
                             </ul>
                         </div>

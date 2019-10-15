@@ -78,7 +78,7 @@ class pengajuancontroller extends Controller
             $databarang = DB::table('detail_nota')->where('id',$row->kode_barang)->get();
 
             foreach($databarang as $row2){
-                $newjumlah = $row2->jumlah_dibayar + $jumlahbaru;
+                $newjumlah = $jumlahbaru;
                 $newdibayar = $newjumlah*$row2->harga;
                 $newkekurangan = $row2->subtotal - $newdibayar;
 

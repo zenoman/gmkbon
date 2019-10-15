@@ -1,6 +1,7 @@
 @extends('layouts.appadmin')
 
 @section('content')
+@if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
 <div class="notika-status-area">
         <div class="container">
             <div class="row">
@@ -148,6 +149,56 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{$notalunas}}</span></h2>
+                            <p>Nota Lunas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{$notabelumlunas}}</span></h2>
+                            <p>Nota Belum Lunas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-6 col-xs-12">
+                    <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
+                        <div class="website-traffic-ctn">
+                            <h2><span class="counter">{{$notapengajuan}}</span></h2>
+                            <p>Pengajuan Nota</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="notika-status-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
+                        <div class="past-day-statis">
+                            <p>Total Hutang</p>
+                            @foreach($hutang as $htg)
+                            <h1>{{"Rp ". number_format($htg->totalkekurangan,0,',','.')}}</h1>
+                            @endforeach
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+@endif
 @endsection
 @section('js')
 

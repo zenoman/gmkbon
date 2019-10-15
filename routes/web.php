@@ -45,3 +45,15 @@ Route::get('exsportnota/{tglmulai}/{tglselesai}','laporancontroller@exsportnota'
 Route::get('exsportdetailnota/{tglmulai}/{tglselesai}','laporancontroller@exsportdetailnota');
 Route::post('/laporan/hapusnota','laporancontroller@hapusnota');
 Route::post('/laporan/hapusdetailnota','laporancontroller@hapusdetailnota');
+
+//pengajuan user
+Route::get('pengajuannotauser','pengajuanusercontroller@index')->name('pengajuan-nota-user');
+Route::get('tambahpengajuannotauser','pengajuanusercontroller@create')->name('tambah-pengajuan-nota-user');
+Route::post('tambahpengajuannota','pengajuanusercontroller@store');
+Route::get('pengajuaneditnotauser','pengajuanusercontroller@listpengajuanedit')->name('pengajuan-edit-nota-user');
+
+
+//nota user
+Route::get('notauser','notausercontroller@index')->name('list-nota-user');
+Route::get('ajukaneditnota/{kode}','notausercontroller@edit');
+Route::post('notauser/editdata','notausercontroller@pengajuanedit');
