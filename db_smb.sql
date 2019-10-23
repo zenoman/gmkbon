@@ -30,14 +30,22 @@ CREATE TABLE IF NOT EXISTS `detail_nota` (
   `kekurangan` int(11) DEFAULT 0,
   `subtotal` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_smb.detail_nota: ~2 rows (approximately)
+-- Dumping data for table db_smb.detail_nota: ~8 rows (approximately)
 DELETE FROM `detail_nota`;
 /*!40000 ALTER TABLE `detail_nota` DISABLE KEYS */;
 INSERT INTO `detail_nota` (`id`, `kode_nota`, `barang`, `jumlah`, `jumlah_dibayar`, `harga`, `dibayar`, `kekurangan`, `subtotal`) VALUES
-	(22, 'N071019-0002', 'jilbab', 3, 3, 20000, 60000, 0, 60000),
-	(23, 'N071019-0002', 'sarung', 4, 4, 1000, 4000, 0, 4000);
+	(24, 'N121019-0001', 'sepatu', 1, 0, 2000, 0, 2000, 2000),
+	(25, 'N121019-0001', 'baju', 5, 3, 20000, 60000, 40000, 100000),
+	(26, 'N141019-0001', 'celana', 2, 2, 3000, 6000, 0, 6000),
+	(27, 'N141019-0001', 'jilbab', 1, 1, 5000, 5000, 0, 5000),
+	(28, 'N151019-0001', 'spandex', 5, 1, 20000, 20000, 80000, 100000),
+	(29, 'N151019-0001', 'chinos', 2, 0, 40000, 0, 80000, 80000),
+	(30, 'N151019-0002', 'jilbab', 2, 1, 30000, 30000, 30000, 60000),
+	(31, 'N151019-0002', 'jaket polos', 5, 0, 80000, 0, 400000, 400000),
+	(32, 'N151019-0003', 'botol aqua', 5, 5, 2000, 10000, 0, 10000),
+	(33, 'N151019-0003', 'kemeja panjang', 5, 4, 45000, 180000, 45000, 225000);
 /*!40000 ALTER TABLE `detail_nota` ENABLE KEYS */;
 
 -- Dumping structure for table db_smb.migrations
@@ -70,13 +78,18 @@ CREATE TABLE IF NOT EXISTS `nota` (
   `tgl` date DEFAULT NULL,
   `status` enum('lunas','belum lunas','pengajuan') DEFAULT 'pengajuan',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_smb.nota: ~1 rows (approximately)
+-- Dumping data for table db_smb.nota: ~5 rows (approximately)
 DELETE FROM `nota`;
 /*!40000 ALTER TABLE `nota` DISABLE KEYS */;
 INSERT INTO `nota` (`id`, `kode`, `total`, `dibayar`, `kekurangan`, `pembeli`, `pembuat`, `tgl`, `status`) VALUES
-	(5, 'N071019-0002', 64000, 64000, 0, 6, 'admin', '2019-10-07', 'lunas');
+	(8, 'N071019-0003', 2000, 2000, 0, 6, 'super admin', '2019-10-12', 'pengajuan'),
+	(9, 'N121019-0001', 102000, 60000, 42000, 8, 'superadmin', '2019-10-12', 'belum lunas'),
+	(11, 'N141019-0001', 11000, 11000, 0, 8, 'superadmin', '2019-10-14', 'lunas'),
+	(12, 'N151019-0001', 180000, 20000, 160000, 8, 'superadmin', '2019-10-15', 'belum lunas'),
+	(13, 'N151019-0002', 460000, 30000, 430000, 8, 'superadmin', '2019-10-15', 'belum lunas'),
+	(14, 'N151019-0003', 235000, 190000, 45000, 8, 'superadmin', '2019-10-15', 'belum lunas');
 /*!40000 ALTER TABLE `nota` ENABLE KEYS */;
 
 -- Dumping structure for table db_smb.password_resets
@@ -109,13 +122,16 @@ CREATE TABLE IF NOT EXISTS `pengajuan` (
   `dibaca` enum('Y','N') DEFAULT 'N',
   `konfirmasi` enum('Y','N') DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_smb.pengajuan: ~0 rows (approximately)
+-- Dumping data for table db_smb.pengajuan: ~3 rows (approximately)
 DELETE FROM `pengajuan`;
 /*!40000 ALTER TABLE `pengajuan` DISABLE KEYS */;
 INSERT INTO `pengajuan` (`id`, `pembeli`, `status`, `keterangan`, `kode_nota`, `kode_barang`, `jumlah`, `admin`, `tgl`, `jam`, `dibaca`, `konfirmasi`) VALUES
-	(6, 6, 'update stok', 'asdfasdf', NULL, NULL, NULL, NULL, NULL, NULL, 'N', 'N');
+	(6, 8, 'update stok', 'asdfasdf', 'N121019-0001', 25, 1, 'superadmin', '2019-10-12', '10:08:24', 'N', 'Y'),
+	(7, 8, 'update stok', NULL, 'N151019-0003', 33, 3, NULL, '2019-10-15', '03:10:20', 'N', 'N'),
+	(8, 8, 'update stok', NULL, 'N151019-0003', 33, 4, 'superadmin', '2019-10-15', '03:44:59', 'N', 'Y'),
+	(9, 8, 'update stok', NULL, 'N121019-0001', 25, 3, 'superadmin', '2019-10-15', '10:49:16', 'N', 'Y');
 /*!40000 ALTER TABLE `pengajuan` ENABLE KEYS */;
 
 -- Dumping structure for table db_smb.users
@@ -137,9 +153,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`, `username`, `level`, `email`, `notelp`, `alamat`, `password`, `remember_token`) VALUES
-	(1, 'superadmin', 'superadmin', 'super admin', 'satriosuklun@gmail.com', NULL, NULL, '$2y$10$qPBQvj.D90dK5vUG1MrrSuSkV8pp4UJqsivmw7NsG4S6MaukZrDuC', NULL),
+	(1, 'superadmin', 'superadmin', 'super admin', 'satriosuklun@gmail.com', NULL, NULL, '$2y$10$E5UfXdA8Hb8VaVp.j2DHme2OhsA7vv/Srj4wc6msfDwHA.DtJ4BcG', NULL),
 	(6, 'jono', 'jono', 'pengguna', NULL, '14045', 'gurah, kediri', '$2y$10$dwRpaO/RLdHLSsTyW2MxM.F.CyEPWVBMpf6vPrkyule.EZZHifza.', NULL),
-	(7, 'admin', 'admin', 'admin', 'asklf@gmail.com', NULL, NULL, '$2y$10$helPBE6kAu.gTN/ADx5yzOlTlSyTFxKyhi4xZxohvBiY8DAMTyAwK', NULL),
+	(7, 'admin', 'admin', 'admin', 'asklf@gmail.com', NULL, NULL, '$2y$10$nwuD5AM8i1doNjUNAoMFr.oH.obD6/IGICJ3OxjaimcBXRpQnulie', NULL),
 	(8, 'joni', 'joni', 'pengguna', NULL, '209384902', 'akslfj', '$2y$10$I51ZJk431NXyUrBkClBlyezAxaekbkyoqQwznlIhU9pcetNUnjj4.', NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 

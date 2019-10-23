@@ -111,32 +111,68 @@
                     <div class="mobile-menu">
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
-                                <li>
-                                    <a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a>
-                                </li>
-                                @if(Auth::user()->level=='super admin')
-                                <li>
-                                    <a href="{{url('admin')}}"><i class="fa fa-child"></i> Admin</a>
-                                </li>
-                                @endif
-                                <li>
-                                    <a data-toggle="collapse" data-target="#Pagemob" href="#"><i class="fa fa-file"></i> Transaksi</a>
-                                    <ul id="Pagemob" class="collapse dropdown-header-top">
-                                        <li><a href="{{url('transaksi/tambahdata')}}">Tambah Transaksi</a>
-                                </li>
-                                <li><a href="{{url('transaksi/listdata')}}">Daftar Transaksi</a>
-                                </li>
-                                <li><a href="{{url('transaksi/listdatadikirim')}}">Daftar Transaksi Terkirim</a>
-                                </li>
-                                <li><a href="{{url('transaksi/listdatacancel')}}">Daftar Transaksi Dicancel</a>
-                                </li>
-                                <li><a href="{{url('transaksi/listdatasukses')}}">Daftar Transaksi Sukses</a>
-                                </li>
-                                    </ul>
-                                </li>
-                        <li><a href="{{url('laporan/caridata')}}"><i class="fa fa-file"></i> Laporan</a>
+                                <li><a href="{{url('home')}}"><i class="fa fa-dashboard"></i> Home</a>
                         </li>
+                        @if(Auth::user()->level=='pengguna')
+                        <li><a data-toggle="tab" href="#Pengajuanuser"><i class="fa fa-comment"></i> Pengajuan</a>
+                            <ul class="notika-main-menu-dropdown">
+                                <li>
+                                    <a href="{{route('pengajuan-nota-user')}}"><i class="fa fa-plus"></i> Pengajuan Nota
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('pengajuan-edit-nota-user')}}">
+                                        <i class="fa fa-wrench"></i> Pengajuan Edit Nota
+                                    </a>
+                                </li>
                             </ul>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='pengguna')
+                        <li><a href="{{route('list-nota-user')}}"><i class="fa fa-file"></i> Nota Saya</a>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin')
+                        <li><a href="{{url('admin')}}"><i class="fa fa-child"></i> Admin</a>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
+                        <li><a href="{{url('user')}}"><i class="fa fa-users"></i> User</a>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
+                        <li><a data-toggle="tab" href="#Interface"><i class="fa fa-list"></i> Nota</a>
+                            <ul class="notika-main-menu-dropdown">
+                                <li><a href="{{route('tambah-nota')}}"><i class="fa fa-plus"></i> Tambah Nota</a>
+                                </li>
+                                <li><a href="{{route('tampil-nota')}}">
+                                <i class="fa fa-list-ol"></i> List Semua Nota
+                                </a>
+                                </li>
+                                <li><a href="{{route('tampil-nota-lunas')}}"><i class="fa fa-check"></i> List Nota Lunas</a>
+                                </li>
+                                <li><a href="{{route('tampil-nota-belumlunas')}}"><i class="fa fa-close"></i> List Nota Belum Lunas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
+                        <li><a data-toggle="tab" href="#pengajuan"><i class="fa fa-comment"></i> Pengajuan</a>
+                             <ul class="notika-main-menu-dropdown">
+                            <li><a href="{{route('pengajuan-nota')}}"><i class="fa fa-file"></i> Pengajuan Nota</a>
+                                </li>
+                                <li>
+                                <a href="{{route('pengajuan-edit')}}"><i class="fa fa-cogs"></i> Pengajuan Edit</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+                        @if(Auth::user()->level=='super admin' || Auth::user()->level=='admin')
+                        <li><a href="{{url('laporan')}}"><i class="fa fa-file"></i> Laporan</a>
+                        </li>
+                        @endif
+                            </ul>
+
                         </nav>
                     </div>
                 </div>
