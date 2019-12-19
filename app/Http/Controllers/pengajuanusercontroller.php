@@ -58,7 +58,8 @@ class pengajuanusercontroller extends Controller
                     'subtotal' => $subtotal,
                     'dibayar' =>$dibayar,
                     'kekurangan' =>$kekurangan,
-                    'jumlah_dibayar' =>$jumlahbayar
+                    'jumlah_dibayar' =>$jumlahbayar,
+                    'idpembeli'=>Auth::user()->username
                 ];
         $i++;
      }

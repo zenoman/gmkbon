@@ -3,7 +3,7 @@
 <head>
 	<title>ceta ulang</title>
 </head>
-<body onload="window.print();window.close();">
+<body onload="window.print();">
 <div id="hidden_div">
             <table width="100%">
                 <tr>
