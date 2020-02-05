@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\DetailNotaExport' => $baseDir . '/app/Exports/DetailNotaExport.php',
+    'App\\Exports\\NotaExport' => $baseDir . '/app/Exports/NotaExport.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -18,7 +20,9 @@ return array(
     'App\\Http\\Controllers\\admincontroller' => $baseDir . '/app/Http/Controllers/admincontroller.php',
     'App\\Http\\Controllers\\laporancontroller' => $baseDir . '/app/Http/Controllers/laporancontroller.php',
     'App\\Http\\Controllers\\notacontroller' => $baseDir . '/app/Http/Controllers/notacontroller.php',
+    'App\\Http\\Controllers\\notausercontroller' => $baseDir . '/app/Http/Controllers/notausercontroller.php',
     'App\\Http\\Controllers\\pengajuancontroller' => $baseDir . '/app/Http/Controllers/pengajuancontroller.php',
+    'App\\Http\\Controllers\\pengajuanusercontroller' => $baseDir . '/app/Http/Controllers/pengajuanusercontroller.php',
     'App\\Http\\Controllers\\usercontroller' => $baseDir . '/app/Http/Controllers/usercontroller.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

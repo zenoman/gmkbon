@@ -460,6 +460,8 @@ class ComposerStaticInit3b74d15d10651f40196a0a521cb4973a
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\DetailNotaExport' => __DIR__ . '/../..' . '/app/Exports/DetailNotaExport.php',
+        'App\\Exports\\NotaExport' => __DIR__ . '/../..' . '/app/Exports/NotaExport.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -470,7 +472,9 @@ class ComposerStaticInit3b74d15d10651f40196a0a521cb4973a
         'App\\Http\\Controllers\\admincontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/admincontroller.php',
         'App\\Http\\Controllers\\laporancontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/laporancontroller.php',
         'App\\Http\\Controllers\\notacontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/notacontroller.php',
+        'App\\Http\\Controllers\\notausercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/notausercontroller.php',
         'App\\Http\\Controllers\\pengajuancontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/pengajuancontroller.php',
+        'App\\Http\\Controllers\\pengajuanusercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/pengajuanusercontroller.php',
         'App\\Http\\Controllers\\usercontroller' => __DIR__ . '/../..' . '/app/Http/Controllers/usercontroller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

@@ -54,7 +54,8 @@
                                       
                                         <th>No</th>
                                         <th>Kode Nota</th>
-                                        <th>Tanggal</th>
+                                        <th>Tgl Buat</th>
+                                        <th>Tgl Edit</th>
                                         <th>Pembeli</th>
                                         <th>Total</th>
                                         <th>Dibayar</th>
@@ -72,7 +73,7 @@
                                       <td>{{$i++}}</td>
                                       <td>{{$row->kode}}</td>
                                       <td>{{$row->tgl}}</td>
-
+                                      <td>{{$row->tgl_edit}}</td>
                                       <td>{{$row->namauser}}</td>
                                       <td>
                                         {{"Rp ". number_format($row->total,0,',','.')}}
@@ -110,7 +111,8 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Kode Nota</th>
-                                        <th>Tanggal</th>
+                                        <th>Tgl Buat</th>
+                                        <th>Tgl Edit</th>
                                         <th>Pembeli</th>
                                         <th>Total</th>
                                         <th>Dibayar</th>

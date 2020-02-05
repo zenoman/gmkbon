@@ -62,6 +62,7 @@ class notacontroller extends Controller
      	'total'=>$request->total_harga,
      	'pembeli'=>$request->usernya,
      	'tgl'=>date('Y-m-d'),
+        'tgl_edit'=>date('Y-m-d H:i:s'),
      	'dibayar'=>$request->total_bayar,
      	'kekurangan'=>$request->kembalianya,
         'status'=>$request->status,
@@ -97,6 +98,7 @@ class notacontroller extends Controller
         ->where('kode','like','%'.$request->cari.'%')
         ->orwhere('users.username','like','%'.$request->cari.'%')
         ->orwhere('tgl','like','%'.$request->cari.'%')
+        ->orwhere('tgl_edit','like','%'.$request->cari.'%')
         ->get();
 
         return view('nota.pencarian',['data'=>$data,'cari'=>$request->cari]);
@@ -229,6 +231,7 @@ class notacontroller extends Controller
             'total'=>$totalnya,
             'dibayar'=>$totaldibayar,
             'kekurangan'=>$totalkekurangan,
+            'tgl_edit'=>date('Y-m-d H:i:s'),
             'status'=>$status
         ]);
         return back()->with('status','Data berhasil diubah');
@@ -313,6 +316,7 @@ class notacontroller extends Controller
             'total'=>$totalnya,
             'dibayar'=>$totaldibayar,
             'kekurangan'=>$totalkekurangan,
+            'tgl_edit'=>date('Y-m-d H:i:s'),
             'status'=>$status
         ]);
         return back()->with('status','Data berhasil diubah');
