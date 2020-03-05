@@ -266,6 +266,7 @@ class notacontroller extends Controller
             'total'=>$totalnya,
             'dibayar'=>$totaldibayar,
             'kekurangan'=>$totalkekurangan,
+            'tgl_edit'=>date('Y-m-d H:i:s'),
             'status'=>$status
         ]);
         return back()->with('status','Data berhasil diubah');
@@ -319,7 +320,6 @@ class notacontroller extends Controller
             'tgl_edit'=>date('Y-m-d H:i:s'),
             'status'=>$status
         ]);
-        return back()->with('status','Data berhasil diubah');
-        //return redirect('editnota/'.$request->kodenota)->with('status','Data Berhasil Diubah');       
+        return back()->with('status','Data berhasil diubah');     
     }
 }
